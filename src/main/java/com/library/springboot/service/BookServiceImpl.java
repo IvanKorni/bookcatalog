@@ -5,6 +5,7 @@ import com.library.springboot.entity.Book;
 import com.library.springboot.exception_handling.NoSuchBookException;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -20,12 +21,14 @@ public class BookServiceImpl implements BookService {
     @Autowired
     BookDao bookDao;
 
+    @Cacheable(cacheNames="books")
     @Override
     public List<Book> getAll() {
         log.info("Getting a list of books");
         return bookDao.findAll();
     }
 
+    @Cacheable(cacheNames="sorted_book")
     @Override
     public Map<Character, Integer> getSortedStatistic() {
         log.info("Getting statistics");
@@ -42,6 +45,7 @@ public class BookServiceImpl implements BookService {
         return map;
     }
 
+    @Cacheable(cacheNames="find_books")
     @Override
     public List<Book> findByFirstLetter(char letter) {
         log.info("Search for books by author");
