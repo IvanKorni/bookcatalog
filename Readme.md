@@ -12,7 +12,7 @@ Design and implement a REST API using Spring-Boot.
 - Mysql
   
 #### Run an application
-A built executable jar is working application and does not need any specific configuration.
+A built executable war is working application and does not need any specific configuration.
 
 SpringbootApplication deploy to localserver
 
