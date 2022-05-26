@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 import static com.library.springboot.util.StreamFilter.stream;
@@ -50,12 +49,10 @@ public class BookServiceImpl implements BookService {
     public List<Book> findByFirstLetter(char letter) {
         log.info("Search for books by author");
 
-        Stream<Book> stream = stream(bookDao, letter);
-
-        if (stream.count() == 0) {
+        if (stream(bookDao, letter).count() == 0) {
             throw new NoSuchBookException("Book not found");
         }
 
-        return stream.collect(Collectors.toList());
+        return stream(bookDao, letter).collect(Collectors.toList());
     }
 }
