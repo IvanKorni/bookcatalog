@@ -35,11 +35,8 @@ public class BookServiceImpl implements BookService {
         Map<Character, Integer> map = new LinkedHashMap<>();
 
         for (char i = 'a'; i <= 'z'; i++) {
-            map.put(i, 0);
             int count = (int) stream(bookDao, i).count();
-            if (count != 0) {
-                map.put(i, count);
-            }
+            map.put(i, count);
         }
 
         return map;
