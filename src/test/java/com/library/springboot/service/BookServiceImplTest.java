@@ -30,6 +30,6 @@ class BookServiceImplTest {
 
     @Test
     void findByFirstLetter() {
-        assertTrue(bookService.findByFirstLetter('A').isEmpty());
+        assertFalse(bookService.findByFirstLetter('a').isEmpty());
     }
 }
