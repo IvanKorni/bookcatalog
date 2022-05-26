@@ -7,14 +7,17 @@ import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 import static com.library.springboot.util.StreamFilter.stream;
 
 @Service
+@Transactional(readOnly = true)
 @Log
 public class BookServiceImpl implements BookService {
 
@@ -47,10 +50,12 @@ public class BookServiceImpl implements BookService {
     public List<Book> findByFirstLetter(char letter) {
         log.info("Search for books by author");
 
-        if (stream(bookDao, letter).count() == 0) {
+        Stream<Book> stream = stream(bookDao, letter);
+
+        if (stream.count() == 0) {
             throw new NoSuchBookException("Book not found");
         }
 
-        return stream(bookDao, letter).collect(Collectors.toList());
+        return stream.collect(Collectors.toList());
     }
 }
